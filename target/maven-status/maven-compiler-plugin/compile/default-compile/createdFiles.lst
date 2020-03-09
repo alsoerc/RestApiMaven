@@ -1,0 +1,6 @@
+com/mytry/restapimaven/DaoEmpleado.class
+com/mytry/restapimaven/GenericResource.class
+com/mytry/restapimaven/IDao.class
+com/mytry/restapimaven/ApplicationConfig.class
+com/mytry/restapimaven/Empleado.class
+com/mytry/restapimaven/ConnectionToDb.class
