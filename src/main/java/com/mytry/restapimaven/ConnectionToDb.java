@@ -22,7 +22,7 @@ public class ConnectionToDb implements Serializable{
     //Variable de instancia de clase única para implementar patrón singleton
     private static ConnectionToDb connectToDb;
     //Variable para gestionar la conexión
-    private transient  Connection driverPostgres = null;
+    private transient  Connection driverPostgres;
     private boolean successQuery = false;
     private transient  PreparedStatement preSentencia;
     
@@ -30,10 +30,11 @@ public class ConnectionToDb implements Serializable{
     //Constructor privado con las credenciales para cceder a la base de datos
     private ConnectionToDb() {        
         try {
-            driverPostgres = DriverManager.getConnection("jdbc:postgresql://localhost:7000/empleados",
+            Class.forName("org.postgresql.Driver");
+            driverPostgres = DriverManager.getConnection("jdbc:postgresql://10.40.7.40:7000/empleados",
                     "postgres", "12334");
             Logger.getLogger(ConnectionToDb.class.getName()).log(Level.INFO, "Me conecté papu");
-        } catch (SQLException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ConnectionToDb.class.getName()).log(Level.SEVERE, null, ex);
         }            
     }
@@ -95,15 +96,13 @@ public ResultSet executeQuery(int statementOption, int id){
     try{
         preSentencia = driverPostgres.prepareStatement(getStatement(statementOption));
         
-        if(statementOption==3){
+        if(statementOption==3)
                 preSentencia.setInt(1, id);
-        }
                 
          rs = preSentencia.executeQuery();
     }catch(SQLException e){
         Logger.getLogger(ConnectionToDb.class.getName()).log(Level.SEVERE, null, e);
     }
-    System.out.println(rs);
     return rs;
 }
 
@@ -114,7 +113,7 @@ public ResultSet executeQuery(int statementOption, int id){
                             "UPDATE empleados SET nombre = ?, apellido = ? WHERE (id = ?)",
                             "SELECT * FROM empleados WHERE (id = ?)",
                             "SELECT * FROM empleados;"};
-
+        
         return statements[statementOption];
     }
 }

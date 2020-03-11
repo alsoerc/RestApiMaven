@@ -25,8 +25,8 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("generic")
 public class GenericResource {
-    private IDao myDao = new DaoEmpleado();
-    private Empleado empleado = new Empleado();
+    private IDao myDao;
+    private Empleado empleado;
 
     @Context
     private UriInfo context;
@@ -35,7 +35,8 @@ public class GenericResource {
      * Creates a new instance of GenericResource
      */
     public GenericResource() {
-        //Constructor genérico
+            myDao = new DaoEmpleado();
+            empleado = new Empleado();
     }
 
     /**
@@ -49,17 +50,11 @@ public class GenericResource {
         return myDao.readAllRecords();
         
     }
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public String getAll() {
-//        
-//        return "hola bb";
-//        
-//    }
+ 
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{id}")
+    @Path("{id}")
     public Empleado getOneByID(@PathParam("id")String id) {
         empleado.setId(Integer.parseInt(id));
         return (Empleado) myDao.readOneRecord(empleado);

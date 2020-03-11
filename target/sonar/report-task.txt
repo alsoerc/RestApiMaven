@@ -1,0 +1,6 @@
+projectKey=com.mytry:RestApiMaven
+serverUrl=http://localhost:9001
+serverVersion=8.2.0.32929
+dashboardUrl=http://localhost:9001/dashboard?id=com.mytry%3ARestApiMaven
+ceTaskId=AXDKiAnO_KeCcQBunFl_
+ceTaskUrl=http://localhost:9001/api/ce/task?id=AXDKiAnO_KeCcQBunFl_

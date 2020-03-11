@@ -17,9 +17,12 @@ import java.util.logging.Logger;
 */
 public class DaoEmpleado implements IDao<Empleado>, Serializable{
     //Variable de instancia única para ejecutar sentencias sql
-    private ConnectionToDb con2Db = ConnectionToDb.getInstance();
-    //Variable para asignar la sentencia sql
-    private String sql = "";
+    private ConnectionToDb con2Db;
+
+    public DaoEmpleado() {
+        con2Db = ConnectionToDb.getInstance();
+    }
+    
     
     @Override
     public boolean insertRecord(Empleado t) {
@@ -56,17 +59,15 @@ public class DaoEmpleado implements IDao<Empleado>, Serializable{
 
     @Override
     public List<Empleado> readAllRecords() {
-        
         ResultSet registros = con2Db.executeQuery(4,0);
-        
-        Empleado empleado = new Empleado();
         List<Empleado> listaEmpleados = new ArrayList<>();
         try{
              while(registros.next()){
+                 Empleado empleado = new Empleado();
                 empleado.setId(registros.getInt(1));
                 empleado.setNombre(registros.getString(2));
                 empleado.setApellido(registros.getString(3));
-                listaEmpleados.add(empleado);
+                listaEmpleados.add(empleado);   
             }
         }catch(SQLException ex){
             Logger.getLogger(DaoEmpleado.class.getName()).log(Level.SEVERE, null, ex);
